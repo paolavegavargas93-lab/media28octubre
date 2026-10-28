@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Corte Final: tu proyecto en video | Misaelverse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1fb; --panel:#ffffff; --panel2:#f6f7fd; --ink:#12122b; --muted:#545a7a;
+  --line:rgba(40,40,110,.16); --cyan:#007f8c; --mag:#c2189f; --vio:#6232d6; --amber:#a86b00; --ok:#0d8a4f; --bad:#c0263d;
+  --glow:0 0 0 transparent;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#070714; --panel:#0e0f2b; --panel2:#14153a; --ink:#e8ecff; --muted:#9aa3c7;
+    --line:rgba(140,150,255,.18); --cyan:#00f0ff; --mag:#ff2bd6; --vio:#9d6bff; --amber:#ffc94d; --ok:#3dffa0; --bad:#ff5470;
+    --glow:0 0 18px rgba(0,240,255,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#070714; --panel:#0e0f2b; --panel2:#14153a; --ink:#e8ecff; --muted:#9aa3c7;
+  --line:rgba(140,150,255,.18); --cyan:#00f0ff; --mag:#ff2bd6; --vio:#9d6bff; --amber:#ffc94d; --ok:#3dffa0; --bad:#ff5470;
+  --glow:0 0 18px rgba(0,240,255,.35);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Rajdhani,"Segoe UI",Arial,sans-serif;font-size:1.12rem;line-height:1.5}
+h1,h2,h3{font-family:Orbitron,"Segoe UI",Arial,sans-serif;line-height:1.15;margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 18px}
+img{max-width:100%}
+
+/* ---------- HERO: monitor + timeline ---------- */
+.hero{padding:22px 0 10px}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;color:var(--muted);font-weight:600}
+.brand{font-family:Orbitron,sans-serif;font-size:.85rem;letter-spacing:.06em;color:var(--vio)}
+.hud{display:flex;gap:8px;align-items:center}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:4px 12px;font-weight:700;font-size:.95rem}
+.chip b{color:var(--mag)}
+.iconbtn{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:4px 12px;cursor:pointer;font-weight:700}
+.monitor{position:relative;border:2px solid var(--cyan);border-radius:14px;background:
+  linear-gradient(180deg,rgba(0,240,255,.06),transparent 60%),var(--panel);box-shadow:var(--glow);padding:34px 26px 28px;overflow:hidden}
+.monitor::after{content:"";position:absolute;inset:12px;border:1px dashed var(--line);border-radius:8px;pointer-events:none}
+.rec{position:absolute;top:16px;left:22px;display:flex;align-items:center;gap:8px;font-family:Orbitron,sans-serif;font-size:.8rem;color:var(--bad);font-weight:700}
+.rec i{width:11px;height:11px;border-radius:50%;background:var(--bad);display:inline-block}
+.running .rec i{animation:blink 1.2s steps(2,start) infinite}
+@keyframes blink{to{visibility:hidden}}
+.tc{position:absolute;top:14px;right:22px;font-family:Orbitron,sans-serif;font-size:.85rem;color:var(--muted)}
+.hero h1{font-size:clamp(2rem,6vw,3.9rem);font-weight:900;letter-spacing:.01em;margin-top:14px}
+.hero h1 span{display:block;font-size:.42em;font-weight:500;color:var(--cyan);letter-spacing:.04em;margin-top:8px}
+.lead{max-width:62ch;margin:14px 0 0;font-size:1.25rem;color:var(--muted)}
+
+.timeline{margin-top:18px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 14px 16px}
+.tl-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px}
+.clock{font-family:Orbitron,sans-serif;font-size:1.25rem;font-weight:700}
+.clock small{font-size:.7rem;color:var(--muted);font-weight:500}
+.now{font-weight:700;color:var(--amber)}
+.ctrls{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:2px solid var(--cyan);background:transparent;color:var(--cyan);border-radius:10px;padding:7px 16px;font-weight:700;cursor:pointer;font-size:1rem}
+.btn.solid{background:var(--cyan);color:var(--bg)}
+.btn.mag{border-color:var(--mag);color:var(--mag)}
+.btn.mag.solid{background:var(--mag);color:#fff}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.ruler{position:relative;height:18px;font-size:.8rem;color:var(--muted);font-family:Orbitron,sans-serif}
+.ruler span{position:absolute;transform:translateX(-50%)}
+.ruler span:first-child{transform:none}
+.ruler span:last-child{transform:translateX(-100%)}
+.track{position:relative;height:64px;border-radius:8px;background:var(--panel2);overflow:hidden}
+.clip{position:absolute;top:6px;bottom:6px;border-radius:6px;border:2px solid currentColor;background:color-mix(in srgb,currentColor 16%,transparent);cursor:pointer;text-align:left;padding:4px 8px;overflow:hidden;font-weight:700;line-height:1.1}
+.clip small{display:block;font-weight:500;color:var(--muted);font-size:.78rem}
+.clip.active{background:color-mix(in srgb,currentColor 32%,transparent)}
+.playhead{position:absolute;top:0;bottom:0;width:3px;background:var(--mag);left:0;box-shadow:0 0 10px var(--mag);pointer-events:none;transition:left .9s linear}
+.playhead::before{content:"";position:absolute;top:-1px;left:-6px;border:7px solid transparent;border-top-color:var(--mag)}
+
+/* ---------- NAV ---------- */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--line);margin-top:18px}
+.tabrow{display:flex;gap:4px;overflow-x:auto;padding:8px 0;scrollbar-width:thin}
+.tab{flex:0 0 auto;border:1px solid transparent;background:transparent;border-radius:8px;padding:7px 13px;cursor:pointer;font-weight:700;color:var(--muted);font-size:1.02rem}
+.tab[aria-selected="true"]{color:var(--ink);border-color:var(--cyan);background:var(--panel)}
+.tab .done{color:var(--ok);margin-left:4px}
+
+/* ---------- SECTIONS ---------- */
+main{padding:22px 0 60px}
+section[hidden]{display:none}
+.sec-title{font-size:clamp(1.4rem,3.6vw,2.1rem);margin-bottom:8px}
+.sec-intro{color:var(--muted);max-width:66ch;margin:0 0 20px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+.box h3{font-size:1.05rem;margin-bottom:8px}
+ul.clean{margin:0;padding-left:1.1em}
+ul.clean li{margin:4px 0}
+.req{border-left:4px solid var(--mag)}
+.big-goal{font-size:1.35rem;font-weight:600;max-width:60ch}
+.big-goal strong{color:var(--cyan)}
+.kbd{font-family:Consolas,monospace;font-size:.92em;border:1px solid var(--line);border-bottom-width:3px;border-radius:5px;padding:0 6px;background:var(--panel2);white-space:nowrap}
+
+/* phases */
+.phase{border-left:6px solid currentColor}
+.phase h3{color:currentColor}
+.phase .meta{color:var(--muted);font-weight:700;margin-bottom:6px}
+.phase .deliver{margin-top:10px;font-weight:700}
+.phase .ink{color:var(--ink)}
+.phase.current{outline:2px solid currentColor}
+
+/* structure bar */
+.sbar{display:flex;border-radius:10px;overflow:hidden;border:1px solid var(--line);margin-bottom:14px}
+.seg{flex:var(--w);min-width:0;border:0;padding:12px 8px;cursor:pointer;font-weight:700;background:var(--panel);border-right:1px solid var(--line);text-align:left;line-height:1.15}
+.seg:last-child{border-right:0}
+.seg small{display:block;color:var(--muted);font-weight:500}
+.seg[aria-pressed="true"]{background:var(--panel2);box-shadow:inset 0 -4px 0 var(--mag)}
+.segdetail h3{color:var(--mag)}
+
+/* tools */
+.toolpick{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.toolpick button{border:2px solid var(--line);background:var(--panel);border-radius:10px;padding:8px 14px;cursor:pointer;font-weight:700}
+.toolpick button[aria-pressed="true"]{border-color:var(--vio);color:var(--vio)}
+.tool h3{font-size:1.5rem;color:var(--vio)}
+.tool .tag{display:inline-block;margin:6px 0 12px;color:var(--muted);font-weight:600}
+.tricklist{counter-reset:t;list-style:none;padding:0;margin:0}
+.tricklist li{padding:10px 0;border-top:1px solid var(--line)}
+.tricklist li b{color:var(--cyan)}
+.warn{color:var(--amber);font-weight:600}
+.slowpc{border:2px dashed var(--amber)}
+.slowpc h3{color:var(--amber)}
+
+/* trick cards */
+.flip{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;cursor:pointer;text-align:left;min-height:150px;display:flex;flex-direction:column;gap:6px}
+.flip .q{font-family:Orbitron,sans-serif;font-weight:700;font-size:1rem;color:var(--cyan)}
+.flip .a{display:none;color:var(--ink)}
+.flip .hint{color:var(--muted);font-size:.95rem;margin-top:auto}
+.flip[aria-expanded="true"]{border-color:var(--mag)}
+.flip[aria-expanded="true"] .a{display:block}
+.flip[aria-expanded="true"] .hint{display:none}
+
+/* guion */
+.form{display:grid;gap:12px}
+label{font-weight:700;display:block;margin-bottom:4px}
+label small{color:var(--muted);font-weight:500}
+input[type=text],textarea,select{width:100%;font:inherit;color:var(--ink);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+textarea{min-height:68px;resize:vertical}
+.sugs{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.sugs button{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:3px 10px;cursor:pointer;font-size:.95rem}
+.out{white-space:pre-wrap;font-family:Consolas,"Courier New",monospace;font-size:.92rem;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px;max-height:520px;overflow:auto;width:100%;min-height:260px;color:var(--ink)}
+.msg{font-weight:700;color:var(--ok);min-height:1.5em}
+
+/* quiz */
+.quiz{max-width:760px}
+.qprog{height:8px;background:var(--panel2);border-radius:8px;overflow:hidden;margin-bottom:14px}
+.qprog i{display:block;height:100%;background:var(--cyan);width:0;transition:width .3s}
+.qtext{font-size:1.3rem;font-weight:700;margin-bottom:12px}
+.opts{display:grid;gap:8px}
+.opt{border:2px solid var(--line);background:var(--panel);border-radius:10px;padding:10px 14px;text-align:left;cursor:pointer;font-weight:600}
+.opt.right{border-color:var(--ok);color:var(--ok)}
+.opt.wrong{border-color:var(--bad);color:var(--bad)}
+.fb{margin-top:12px;min-height:3em}
+.result{text-align:center}
+.grade{font-family:Orbitron,sans-serif;font-size:4.5rem;font-weight:900;color:var(--cyan);line-height:1}
+.grade-l{color:var(--muted);font-weight:700}
+
+/* checklist */
+.meter{height:14px;border-radius:10px;background:var(--panel2);overflow:hidden;border:1px solid var(--line)}
+.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--mag));transition:width .3s}
+.checks{list-style:none;padding:0;margin:14px 0 0}
+.checks li{border-top:1px solid var(--line)}
+.checks label{display:flex;gap:10px;align-items:flex-start;padding:9px 2px;font-weight:600;cursor:pointer;margin:0}
+.checks input{width:20px;height:20px;margin-top:3px;accent-color:var(--cyan);flex:0 0 auto}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--panel2);font-family:Orbitron,sans-serif;font-size:.85rem}
+td b{color:var(--cyan)}
+.filename{font-family:Consolas,monospace;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 12px;display:inline-block;margin:6px 0;word-break:break-all}
+
+footer{color:var(--muted);text-align:center;padding:20px 0 30px;font-size:.95rem}
+@media (max-width:640px){
+  .monitor{padding:40px 16px 20px}
+  .clip small{display:none}
+  .seg small{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="wrap hero">
+  <div class="topline">
+    <span class="brand">MISAELVERSE / Estudio de video</span>
+    <div class="hud">
+      <span class="chip" aria-live="polite">XP <b id="xp">0</b></span>
+      <button class="iconbtn" id="mute" aria-pressed="false" title="Activar o silenciar sonidos">🔊</button>
+    </div>
+  </div>
+
+  <div class="monitor" id="monitor">
+    <div class="rec"><i></i>REC</div>
+    <div class="tc" id="tcTop">00:00:00</div>
+    <h1>Corte Final<span>Tu proyecto, contado en video</span></h1>
+    <p class="lead">Hoy tienen 4 horas en sala de sistemas para convertir su proyecto final en un video de 1 a 3 minutos. Esta guía les acompaña desde la idea hasta el archivo exportado.</p>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-head">
+      <div>
+        <div class="clock" id="clock">00:00:00 <small>/ 04:00:00</small></div>
+        <div class="now" id="now">La jornada no ha empezado. Inicia el reloj cuando arranque la clase.</div>
+      </div>
+      <div class="ctrls">
+        <button class="btn solid" id="startBtn">Iniciar jornada</button>
+        <button class="btn" id="resetBtn">Reiniciar</button>
+      </div>
+    </div>
+    <div class="ruler" aria-hidden="true">
+      <span style="left:0">0 h</span><span style="left:25%">1 h</span><span style="left:50%">2 h</span><span style="left:75%">3 h</span><span style="left:100%">4 h</span>
+    </div>
+    <div class="track" id="track">
+      <div class="playhead" id="playhead"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Secciones de la guía">
+  <div class="wrap tabrow" role="tablist" id="tablist"></div>
+</nav>
+
+<main class="wrap">
+
+  <!-- MISIÓN -->
+  <section id="mision" role="tabpanel">
+    <h2 class="sec-title">La misión de hoy</h2>
+    <p class="big-goal">Crear un video que muestre <strong>qué es su proyecto, cómo lo construyeron y qué aprendieron</strong>, para que cualquier persona lo entienda sin haber estado en clase.</p>
+    <div class="grid g2" style="margin-top:20px">
+      <div class="box req">
+        <h3>Requisitos mínimos</h3>
+        <ul class="clean">
+          <li>Duración entre 1 y 3 minutos.</li>
+          <li>Formato MP4, horizontal (16:9), en 1080p o 720p.</li>
+          <li>Voz en off o subtítulos que expliquen el proyecto.</li>
+          <li>El proyecto se ve funcionando o terminado.</li>
+          <li>Música y recursos libres de derechos.</li>
+          <li>Créditos finales con los nombres del equipo.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Cómo usar esta guía</h3>
+        <ul class="clean">
+          <li><b>Ruta</b> divide las 4 horas en fases. La línea de tiempo de arriba marca en qué fase van.</li>
+          <li><b>Estructura</b> les da la fórmula de un buen video.</li>
+          <li><b>Herramientas</b> y <b>Trucos</b> les enseñan a editar como profesionales.</li>
+          <li><b>Guion</b> arma su storyboard a partir de sus ideas.</li>
+          <li><b>Reto</b> y <b>Entrega</b> cierran la jornada.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Un buen video de proyecto…</h3>
+        <ul class="clean">
+          <li>engancha en los primeros 10 segundos;</li>
+          <li>muestra más de lo que dice;</li>
+          <li>se escucha claro;</li>
+          <li>termina antes de que el público se aburra.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- RUTA -->
+  <section id="ruta" role="tabpanel" hidden>
+    <h2 class="sec-title">Ruta de 4 horas</h2>
+    <p class="sec-intro">Cada fase termina con algo concreto. Si una fase se alarga, recorten en la siguiente, nunca en la exportación: un video sin exportar no existe.</p>
+    <div class="grid g2" id="phaseList"></div>
+  </section>
+
+  <!-- ESTRUCTURA -->
+  <section id="estructura" role="tabpanel" hidden>
+    <h2 class="sec-title">La fórmula del video</h2>
+    <p class="sec-intro">Toquen cada bloque para ver qué va en él. Los tiempos son para un video de unos 2 minutos y medio.</p>
+    <div class="sbar" id="sbar" role="group" aria-label="Bloques del video"></div>
+    <div class="box segdetail" id="segdetail" aria-live="polite"></div>
+  </section>
+
+  <!-- HERRAMIENTAS -->
+  <section id="herramientas" role="tabpanel" hidden>
+    <h2 class="sec-title">Herramientas de autor</h2>
+    <p class="sec-intro">Elijan una sola herramienta de edición para todo el equipo y no la cambien a mitad de camino. Toquen cada una para ver sus trucos.</p>
+    <div class="toolpick" id="toolpick" role="group" aria-label="Herramientas"></div>
+    <div class="box tool" id="tooldetail" aria-live="polite"></div>
+    <div class="box slowpc" style="margin-top:14px">
+      <h3>Si el computador va lento</h3>
+      <ul class="clean">
+        <li>Editen en 720p y cierren todas las pestañas que no usen.</li>
+        <li>Corten los clips largos antes de importarlos: suban solo lo que van a usar.</li>
+        <li>Guarden el proyecto cada 10 minutos.</li>
+        <li>Plan B: editen en CapCut del celular y pasen el MP4 final al computador.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- TRUCOS -->
+  <section id="trucos" role="tabpanel" hidden>
+    <h2 class="sec-title">Trucos de editor</h2>
+    <p class="sec-intro">Toquen cada tarjeta para revelar el truco. Ganan XP por cada uno que descubran.</p>
+    <div class="grid g3" id="tricks"></div>
+  </section>
+
+  <!-- GUION -->
+  <section id="guion" role="tabpanel" hidden>
+    <h2 class="sec-title">Generador de guion</h2>
+    <p class="sec-intro">Llenen los campos y la guía arma el storyboard escena por escena. Cópienlo a un documento para no perderlo: esta página no guarda lo que escriben.</p>
+    <div class="grid g2">
+      <div class="box form">
+        <div><label for="fProy">Nombre del proyecto</label><input type="text" id="fProy" placeholder="Ej.: Huerta inteligente"></div>
+        <div><label for="fEq">Integrantes</label><input type="text" id="fEq" placeholder="Nombres del equipo"></div>
+        <div>
+          <label for="fGancho">Gancho <small>(lo primero que verá y oirá el público)</small></label>
+          <textarea id="fGancho" placeholder="¿Cómo van a atrapar al público en 10 segundos?"></textarea>
+          <div class="sugs" id="hookSugs"></div>
+        </div>
+        <div><label for="fIdea">¿Qué es y qué problema resuelve?</label><textarea id="fIdea"></textarea></div>
+        <div><label for="fProc">Proceso <small>(un paso por línea)</small></label><textarea id="fProc" placeholder="Investigamos…&#10;Diseñamos…&#10;Probamos y corregimos…"></textarea></div>
+        <div><label for="fRes">Resultado: ¿qué se ve funcionando?</label><textarea id="fRes"></textarea></div>
+        <div><label for="fApr">¿Qué aprendieron?</label><textarea id="fApr"></textarea></div>
+        <div>
+          <label for="fEst">Estilo del video</label>
+          <select id="fEst">
+            <option>Documental (voz en off y tomas del proceso)</option>
+            <option>Presentadores a cámara</option>
+            <option>Tutorial con grabación de pantalla</option>
+            <option>Tráiler épico (música fuerte, textos cortos)</option>
+          </select>
+        </div>
+        <button class="btn mag solid" id="genBtn">Generar storyboard</button>
+      </div>
+      <div class="box">
+        <h3>Storyboard</h3>
+        <textarea class="out" id="out" readonly aria-label="Storyboard generado">Llenen los campos y toquen “Generar storyboard”.</textarea>
+        <div class="ctrls" style="margin-top:10px"><button class="btn" id="copyBtn">Copiar storyboard</button></div>
+        <p class="msg" id="copyMsg" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RETO -->
+  <section id="reto" role="tabpanel" hidden>
+    <h2 class="sec-title">Reto del editor</h2>
+    <p class="sec-intro">Siete situaciones reales de edición. Elijan la mejor decisión.</p>
+    <div class="box quiz" id="quiz" aria-live="polite"></div>
+  </section>
+
+  <!-- ENTREGA -->
+  <section id="entrega" role="tabpanel" hidden>
+    <h2 class="sec-title">Antes de entregar</h2>
+    <p class="sec-intro">Revisen el video completo con otro equipo y marquen cada punto. Si algo falla, todavía hay tiempo de corregirlo.</p>
+    <div class="grid g2">
+      <div class="box">
+        <h3>Lista de control</h3>
+        <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+        <p id="meterTxt" style="margin:6px 0 0;font-weight:700">0 de 0 listos</p>
+        <ul class="checks" id="checks"></ul>
+      </div>
+      <div class="box">
+        <h3>Exportar y nombrar</h3>
+        <ul class="clean">
+          <li>Exporten en MP4, 1080p (o 720p si el equipo es lento), 30 fps.</li>
+          <li>Esperen a que la barra de exportación llegue al 100 % antes de cerrar.</li>
+          <li>Abran el archivo exportado y mírenlo completo una vez.</li>
+          <li>Nombren el archivo así:</li>
+        </ul>
+        <div class="filename">Curso_Equipo_NombreDelProyecto.mp4</div>
+        <p style="margin:4px 0 0;color:var(--muted)">Ejemplo: 1001_Equipo3_HuertaInteligente.mp4</p>
+        <p style="margin:10px 0 0">Entréguenlo por el medio que indique su docente.</p>
+      </div>
+    </div>
+    <div class="box" style="margin-top:14px">
+      <h3>Cómo se evalúa</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Criterio</th><th>Peso</th><th>Qué se mira</th></tr></thead>
+          <tbody>
+            <tr><td><b>Contenido</b></td><td>30 %</td><td>Se entiende qué es el proyecto, cómo se hizo y qué se aprendió.</td></tr>
+            <tr><td><b>Estructura</b></td><td>20 %</td><td>Gancho, desarrollo y cierre claros; dura entre 1 y 3 minutos.</td></tr>
+            <tr><td><b>Calidad técnica</b></td><td>25 %</td><td>Audio claro, imagen estable y bien iluminada, textos legibles.</td></tr>
+            <tr><td><b>Creatividad</b></td><td>15 %</td><td>Uso intencional de transiciones, ritmo, música y recursos de la herramienta.</td></tr>
+            <tr><td><b>Créditos y derechos</b></td><td>10 %</td><td>Nombres del equipo y recursos libres de derechos citados.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>Misaelverse · Colegio Misael Pastrana Borrero IED</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- Sonido (Web Audio) ---------- */
+let actx=null, muted=false;
+function beep(f,d,type,vol){
+  if(muted)return;
+  try{
+    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    const o=actx.createOscillator(), g=actx.createGain();
+    o.type=type||"sine"; o.frequency.value=f;
+    g.gain.setValueAtTime(vol||.08,actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+(d||.12));
+    o.connect(g); g.connect(actx.destination); o.start(); o.stop(actx.currentTime+(d||.12));
+  }catch(e){}
+}
+const sfx={
+  tap:()=>beep(660,.07,"triangle",.05),
+  ok:()=>{beep(784,.1,"triangle");setTimeout(()=>beep(1047,.14,"triangle"),90)},
+  bad:()=>beep(196,.22,"sawtooth",.05),
+  phase:()=>{[523,659,784,1047].forEach((f,i)=>setTimeout(()=>beep(f,.16,"square",.05),i*120))}
+};
+const muteBtn=document.getElementById("mute");
+muteBtn.addEventListener("click",()=>{muted=!muted;muteBtn.textContent=muted?"🔇":"🔊";muteBtn.setAttribute("aria-pressed",muted)});
+
+/* ---------- XP ---------- */
+let xp=0, booting=true; const xpEl=document.getElementById("xp"); const gained=new Set();
+function addXP(key,n){ if(booting||gained.has(key))return; gained.add(key); xp+=n; xpEl.textContent=xp; }
+
+/* ---------- Fases ---------- */
+const PHASES=[
+  {name:"Preproducción",short:"Guion",from:0,to:40,color:"var(--cyan)",
+   tasks:["Definan el mensaje central en una sola frase.","Escojan estilo y herramienta de edición.","Usen el Generador de guion y repartan roles: guionista, camarógrafo, editor, voz."],
+   deliver:"Storyboard copiado y roles asignados."},
+  {name:"Grabación y captura",short:"Grabar",from:40,to:100,color:"var(--vio)",
+   tasks:["Graben cada escena del storyboard, mínimo dos tomas de cada una.","Capturen la pantalla si su proyecto es digital.","Graben la voz en off en el lugar más silencioso posible.","Pasen todo a una carpeta con el nombre del equipo."],
+   deliver:"Carpeta con todo el material ordenado."},
+  {name:"Edición",short:"Editar",from:100,to:200,color:"var(--mag)",
+   tasks:["Armen el corte bruto: todas las escenas en orden, sin efectos.","Ajusten el ritmo: quiten silencios y repeticiones.","Agreguen textos, subtítulos, música y transiciones.","Tomen una pausa de 10 minutos a mitad de fase y vuelvan a mirar el video con ojos frescos."],
+   deliver:"Video completo de principio a fin."},
+  {name:"Pulido y exportación",short:"Exportar",from:200,to:240,color:"var(--amber)",
+   tasks:["Muestren el video a otro equipo y anoten sus comentarios.","Corrijan solo lo importante: audio, ortografía, créditos.","Exporten en MP4 y revisen el archivo final.","Nombren el archivo y entréguenlo."],
+   deliver:"MP4 entregado con el nombre correcto."}
+];
+const fmtMin=m=>{const h=Math.floor(m/60),mm=m%60;return h+":"+String(mm).padStart(2,"0")};
+
+const track=document.getElementById("track"), playhead=document.getElementById("playhead");
+PHASES.forEach((p,i)=>{
+  const b=document.createElement("button");
+  b.className="clip"; b.style.left=(p.from/240*100)+"%"; b.style.width="calc("+((p.to-p.from)/240*100)+"% - 4px)";
+  b.style.color=p.color; b.dataset.i=i;
+  b.innerHTML=p.short+"<small>"+fmtMin(p.from)+" a "+fmtMin(p.to)+"</small>";
+  b.setAttribute("aria-label","Fase "+(i+1)+": "+p.name+", de "+fmtMin(p.from)+" a "+fmtMin(p.to));
+  b.addEventListener("click",()=>{sfx.tap();show("ruta");setTimeout(()=>document.getElementById("phase"+i).scrollIntoView({behavior:"smooth",block:"center"}),60)});
+  track.insertBefore(b,playhead);
+});
+const phaseList=document.getElementById("phaseList");
+PHASES.forEach((p,i)=>{
+  const d=document.createElement("article");
+  d.className="box phase"; d.id="phase"+i; d.style.color=p.color;
+  d.innerHTML='<h3>Fase '+(i+1)+': '+p.name+'</h3><div class="meta">'+fmtMin(p.from)+' a '+fmtMin(p.to)+' · '+(p.to-p.from)+' minutos</div><ul class="clean ink">'+p.tasks.map(t=>"<li>"+t+"</li>").join("")+'</ul><div class="deliver">Al terminar: <span class="ink">'+p.deliver+'</span></div>';
+  phaseList.appendChild(d);
+});
+
+/* ---------- Reloj de jornada ---------- */
+const TOTAL=4*3600;
+let running=false, acc=0, t0=0, timer=null, lastPhase=-1;
+const clock=document.getElementById("clock"), tcTop=document.getElementById("tcTop"), nowEl=document.getElementById("now");
+const startBtn=document.getElementById("startBtn"), monitor=document.getElementById("monitor");
+const hms=s=>[Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(n=>String(n).padStart(2,"0")).join(":");
+function elapsed(){return Math.min(TOTAL,Math.floor(acc+(running?(Date.now()-t0)/1000:0)))}
+function render(){
+  const e=elapsed();
+  clock.innerHTML=hms(e)+" <small>/ 04:00:00</small>"; tcTop.textContent=hms(e);
+  playhead.style.left="calc("+(e/TOTAL*100)+"% - 1px)";
+  const m=e/60; let idx=PHASES.findIndex(p=>m>=p.from&&m<p.to);
+  if(e>=TOTAL) idx=-2;
+  document.querySelectorAll(".clip").forEach((c,i)=>c.classList.toggle("active",i===idx));
+  document.querySelectorAll(".phase").forEach((c,i)=>c.classList.toggle("current",i===idx));
+  if(idx===-2){nowEl.textContent="Se acabó la jornada. ¿Ya entregaron su MP4?";if(running){pause()}}
+  else if(e===0&&!running){nowEl.textContent="La jornada no ha empezado. Inicia el reloj cuando arranque la clase."}
+  else if(idx>=0){
+    const p=PHASES[idx], left=Math.max(0,Math.ceil(p.to-m));
+    nowEl.textContent="Ahora: Fase "+(idx+1)+", "+p.name+". Quedan "+left+" min para: "+p.deliver.toLowerCase();
+  }
+  if(running&&idx!==lastPhase&&lastPhase!==-1&&idx>=0)sfx.phase();
+  if(running)lastPhase=idx;
+}
+function pause(){acc=elapsed();running=false;clearInterval(timer);monitor.classList.remove("running");startBtn.textContent=acc>0&&acc<TOTAL?"Reanudar":"Iniciar jornada";render()}
+startBtn.addEventListener("click",()=>{
+  sfx.tap();
+  if(running){pause();return}
+  if(elapsed()>=TOTAL)return;
+  running=true;t0=Date.now();lastPhase=PHASES.findIndex(p=>elapsed()/60>=p.from&&elapsed()/60<p.to);
+  monitor.classList.add("running");startBtn.textContent="Pausar";
+  timer=setInterval(render,1000);render();
+});
+document.getElementById("resetBtn").addEventListener("click",()=>{
+  if(elapsed()>0&&!confirm("¿Reiniciar el reloj de la jornada a 00:00:00?"))return;
+  running=false;clearInterval(timer);acc=0;lastPhase=-1;monitor.classList.remove("running");startBtn.textContent="Iniciar jornada";render();
+});
+
+/* ---------- Pestañas ---------- */
+const TABS=[["mision","Misión"],["ruta","Ruta"],["estructura","Estructura"],["herramientas","Herramientas"],["trucos","Trucos"],["guion","Guion"],["reto","Reto"],["entrega","Entrega"]];
+const tablist=document.getElementById("tablist");
+TABS.forEach(([id,label])=>{
+  const b=document.createElement("button");
+  b.className="tab";b.setAttribute("role","tab");b.id="tab-"+id;b.setAttribute("aria-controls",id);b.dataset.id=id;
+  b.innerHTML=label+'<span class="done" hidden>✓</span>';
+  b.addEventListener("click",()=>{sfx.tap();show(id)});
+  tablist.appendChild(b);
+  document.getElementById(id).setAttribute("aria-labelledby","tab-"+id);
+});
+tablist.addEventListener("keydown",e=>{
+  if(e.key!=="ArrowRight"&&e.key!=="ArrowLeft")return;
+  const tabs=[...tablist.children], i=tabs.indexOf(document.activeElement); if(i<0)return;
+  const n=tabs[(i+(e.key==="ArrowRight"?1:-1)+tabs.length)%tabs.length]; n.focus(); show(n.dataset.id);
+});
+function show(id){
+  if(!document.getElementById(id))id="mision";
+  TABS.forEach(([t])=>{
+    const sel=t===id;
+    document.getElementById(t).hidden=!sel;
+    const b=document.getElementById("tab-"+t);
+    b.setAttribute("aria-selected",sel);b.tabIndex=sel?0:-1;
+  });
+  const tb=document.getElementById("tab-"+id); tb.querySelector(".done").hidden=false;
+  tb.scrollIntoView({block:"nearest",inline:"nearest"});
+  addXP("sec-"+id,10);
+  const nav=document.querySelector("nav.tabs"); if(nav.getBoundingClientRect().top<=1){window.scrollTo({top:nav.offsetTop-0,behavior:"smooth"})}
+}
+
+/* ---------- Estructura ---------- */
+const SEGS=[
+  {n:"Gancho",t:"0:00 a 0:10",w:1,what:"Atrapen al público antes de que se vaya.",ideas:["Muestren primero el resultado final funcionando.","Hagan una pregunta que el proyecto responde.","Un dato sorprendente o un antes y después."],avoid:"Empezar con 20 segundos de logo o con “Hola, somos el equipo…”."},
+  {n:"Presentación",t:"0:10 a 0:30",w:2,what:"Quiénes son, cómo se llama el proyecto y qué problema resuelve.",ideas:["Una frase clara: “Creamos X para que Y”.","Texto en pantalla con el nombre del proyecto.","Tomas cortas de cada integrante."],avoid:"Leer un párrafo largo mirando el papel."},
+  {n:"Proceso",t:"0:30 a 1:30",w:6,what:"Cómo lo construyeron: pasos, herramientas, errores y soluciones.",ideas:["Usen B-roll: manos trabajando, pantallas, bocetos.","Cuenten un error real y cómo lo resolvieron.","Aceleren tomas largas (timelapse) para mostrar trabajo."],avoid:"Mostrar cada paso con el mismo tiempo; elijan los 3 más interesantes."},
+  {n:"Resultado",t:"1:30 a 2:15",w:4.5,what:"La demostración: el proyecto funcionando o terminado.",ideas:["Primer plano de los detalles importantes.","Zoom con fotogramas clave sobre la parte clave.","Si es digital, graben la pantalla mientras lo usan."],avoid:"Decir que funciona sin mostrarlo."},
+  {n:"Cierre",t:"2:15 a 2:30",w:1.5,what:"Lo que aprendieron, créditos y una frase final.",ideas:["Una frase de aprendizaje por integrante.","Créditos: nombres, curso, música usada.","Terminen con una imagen fuerte del proyecto."],avoid:"Cortar de golpe sin créditos."}
+];
+const sbar=document.getElementById("sbar"), sdet=document.getElementById("segdetail");
+SEGS.forEach((s,i)=>{
+  const b=document.createElement("button");
+  b.className="seg";b.style.setProperty("--w",s.w);b.setAttribute("aria-pressed","false");
+  b.innerHTML=(i+1)+". "+s.n+"<small>"+s.t+"</small>";
+  b.addEventListener("click",()=>{sfx.tap();pickSeg(i)});
+  sbar.appendChild(b);
+});
+function pickSeg(i){
+  [...sbar.children].forEach((b,j)=>b.setAttribute("aria-pressed",i===j));
+  const s=SEGS[i];
+  sdet.innerHTML="<h3>"+(i+1)+". "+s.n+" ("+s.t+")</h3><p style='margin:6px 0 10px;font-size:1.2rem'>"+s.what+"</p><ul class='clean'>"+s.ideas.map(x=>"<li>"+x+"</li>").join("")+"</ul><p class='warn' style='margin:12px 0 0'>Eviten: "+s.avoid+"</p>";
+  addXP("seg"+i,5);
+}
+pickSeg(0);
+
+/* ---------- Herramientas ---------- */
+const TOOLS=[
+  {n:"CapCut",tag:"Editor completo y gratuito (escritorio, web y celular). Ideal para tráileres y videos con mucho ritmo.",
+   tricks:[["Subtítulos automáticos","En Texto, usen la opción de subtítulos automáticos. Luego revisen la ortografía línea por línea: la máquina se equivoca con nombres."],
+           ["Dividir clips rápido","Pongan el cabezal donde quieren cortar y presionen <span class='kbd'>Ctrl</span> + <span class='kbd'>B</span>. Borren lo que sobra con <span class='kbd'>Supr</span>."],
+           ["Zoom con fotogramas clave","Marquen un fotograma clave al inicio, avancen, aumenten la escala y marquen otro. CapCut crea el zoom suave entre ambos."],
+           ["Quitar el fondo","Seleccionen el clip de una persona y activen la eliminación automática de fondo para ponerla delante de su proyecto."],
+           ["Velocidad","Aceleren tomas largas de trabajo (2x a 8x) para mostrar el proceso en pocos segundos."]],
+   warn:"Los efectos y plantillas marcados como Pro son de pago: si los usan, no les dejará exportar gratis. Necesita cuenta e internet en la versión web."},
+  {n:"Canva",tag:"Editor de video con plantillas, muy fácil de usar. Ideal para videos con mucho texto, gráficos y animaciones.",
+   tricks:[["Empezar desde plantilla","Busquen “video” en plantillas, elijan una y cambien textos, colores y fotos por los de su proyecto."],
+           ["Grabarse a sí mismos","En Subir archivos usen la opción de grabarse: graba cámara y pantalla al tiempo, perfecto para explicar un proyecto digital."],
+           ["Animar elementos","Seleccionen un texto o imagen y elijan Animar. Usen la misma animación en todo el video para que se vea profesional."],
+           ["Sincronizar con la música","Con la pista de música seleccionada, activen la sincronización de ritmo: Canva ajusta los cortes a los golpes de la canción."],
+           ["Duración de cada escena","Arrastren el borde de cada página en la línea de tiempo para que ningún texto dure menos de 3 segundos."]],
+   warn:"Los elementos con corona son de pago. Funciona en el navegador, así que necesita buena conexión; descarguen el MP4 apenas terminen."},
+  {n:"Clipchamp",tag:"Editor de Microsoft que viene en Windows 11 y funciona en el navegador. Buena opción si CapCut no abre.",
+   tricks:[["Grabar pantalla y cámara","Desde Grabar y crear, graben la pantalla o la cámara sin instalar nada más."],
+           ["Subtítulos automáticos","Seleccionen el clip con voz y activen los subtítulos automáticos en el panel de la derecha."],
+           ["Texto a voz","Si nadie quiere grabar su voz, escriban el texto y elijan una voz en español. Ajusten la velocidad para que suene natural."],
+           ["Exportar","Exporten en 1080p: es gratis y no deja marca de agua."]],
+   warn:"Pide cuenta Microsoft. Si el internet falla mucho, el proyecto puede tardar en cargar."},
+  {n:"Grabar pantalla",tag:"Para proyectos digitales: páginas web, juegos, presentaciones, programas.",
+   tricks:[["Barra de juegos de Windows","Abran la ventana que quieren grabar y presionen <span class='kbd'>Win</span> + <span class='kbd'>Alt</span> + <span class='kbd'>R</span> para empezar y detener. Graba solo esa ventana."],
+           ["Capturas de pantalla","<span class='kbd'>Win</span> + <span class='kbd'>Shift</span> + <span class='kbd'>S</span> recorta una parte de la pantalla para usarla como imagen."],
+           ["OBS Studio","Si necesitan grabar todo el escritorio o combinar cámara y pantalla, OBS es gratuito y muy completo."],
+           ["Desde el celular","La grabación de pantalla integrada del celular sirve para proyectos en apps. Graben con el celular en horizontal."]],
+   warn:"Antes de grabar, cierren notificaciones y pestañas con información personal."},
+  {n:"Recursos libres",tag:"Música, sonidos e imágenes que pueden usar sin problemas de derechos de autor.",
+   tricks:[["Música y video de Pixabay","Tiene música, efectos de sonido y videos de apoyo gratuitos para uso en proyectos."],
+           ["Biblioteca de audio de YouTube","Música y efectos gratuitos. Revisen si la canción pide atribución y pónganla en los créditos."],
+           ["Íconos y gráficos","Canva y Pixabay tienen ilustraciones libres para explicar ideas."],
+           ["Citar siempre","En los créditos escriban el nombre de cada canción y de dónde la sacaron."]],
+   warn:"Una canción famosa sacada de YouTube o Spotify puede hacer que bloqueen o silencien su video."}
+];
+const tp=document.getElementById("toolpick"), td=document.getElementById("tooldetail");
+TOOLS.forEach((t,i)=>{
+  const b=document.createElement("button"); b.textContent=t.n; b.setAttribute("aria-pressed","false");
+  b.addEventListener("click",()=>{sfx.tap();pickTool(i)}); tp.appendChild(b);
+});
+function pickTool(i){
+  [...tp.children].forEach((b,j)=>b.setAttribute("aria-pressed",i===j));
+  const t=TOOLS[i];
+  td.innerHTML="<h3>"+t.n+"</h3><div class='tag'>"+t.tag+"</div><ul class='tricklist'>"+t.tricks.map(x=>"<li><b>"+x[0]+".</b> "+x[1]+"</li>").join("")+"</ul><p class='warn' style='margin:12px 0 0'>Cuidado: "+t.warn+"</p>";
+  addXP("tool"+i,5);
+}
+pickTool(0);
+
+/* ---------- Trucos ---------- */
+const TRICKS=[
+  ["El audio manda","El público perdona una imagen regular, pero no un audio malo. Graben la voz cerca del micrófono y en silencio; usen audífonos con micrófono si los tienen."],
+  ["Luz de frente","Pónganse mirando hacia la ventana, nunca de espaldas a ella. Si la luz queda detrás, quedarán como una sombra."],
+  ["Regla de tercios","Imaginen la pantalla dividida en 3×3. Pongan los ojos de la persona o el objeto importante sobre una de las líneas, no en el centro exacto."],
+  ["B-roll","Mientras alguien habla, muestren tomas de apoyo: manos trabajando, el proyecto de cerca, bocetos. Así el video nunca se queda quieto."],
+  ["Cortar al ritmo","Hagan los cortes justo en los golpes de la música. El video se sentirá rápido y profesional sin un solo efecto."],
+  ["Música por debajo","Cuando hay voz, bajen la música a un 20 o 30 % del volumen. La voz siempre debe entenderse."],
+  ["Corte en J","Hagan que el sonido de la siguiente escena empiece un segundo antes que su imagen. Las transiciones se sienten naturales."],
+  ["Respirar antes y después","Al grabar, esperen un segundo antes de hablar y un segundo después de terminar. Así tendrán margen para cortar."],
+  ["Texto que se lee","Cada texto en pantalla debe durar al menos 3 segundos. Usen máximo dos tipos de letra en todo el video."],
+  ["Cámara quieta","Apoyen el celular en una mesa, libros o un trípode. Una imagen temblorosa distrae más que una toma sencilla."],
+  ["Siempre horizontal","Graben con el celular acostado. Un video vertical en pantalla horizontal deja dos franjas negras enormes."],
+  ["Menos transiciones","Un corte directo es la transición más profesional. Guarden las transiciones llamativas para cambios grandes de tema."]
+];
+const tricksEl=document.getElementById("tricks");
+TRICKS.forEach((t,i)=>{
+  const b=document.createElement("button"); b.className="flip"; b.setAttribute("aria-expanded","false");
+  b.innerHTML="<span class='q'>"+t[0]+"</span><span class='a'>"+t[1]+"</span><span class='hint'>Toca para revelar</span>";
+  b.addEventListener("click",()=>{const open=b.getAttribute("aria-expanded")!=="true";b.setAttribute("aria-expanded",open);if(open){sfx.ok();addXP("trick"+i,5)}else sfx.tap()});
+  tricksEl.appendChild(b);
+});
+
+/* ---------- Generador de guion ---------- */
+const HOOKS=["Mostrar primero el resultado funcionando","Hacer una pregunta: ¿Alguna vez…?","Un dato sorprendente","Un antes y después"];
+const hs=document.getElementById("hookSugs"), fG=document.getElementById("fGancho");
+HOOKS.forEach(h=>{const b=document.createElement("button");b.type="button";b.textContent=h;b.addEventListener("click",()=>{sfx.tap();fG.value=h+": ";fG.focus()});hs.appendChild(b)});
+const val=id=>document.getElementById(id).value.trim();
+document.getElementById("genBtn").addEventListener("click",()=>{
+  const proy=val("fProy")||"[Nombre del proyecto]", eq=val("fEq")||"[Integrantes]", est=val("fEst");
+  const g=val("fGancho")||"[Escriban el gancho]", idea=val("fIdea")||"[Qué es y qué problema resuelve]";
+  const pasos=val("fProc").split("\n").map(s=>s.trim()).filter(Boolean);
+  const res=val("fRes")||"[Qué se ve funcionando]", apr=val("fApr")||"[Qué aprendieron]";
+  const docu=est.startsWith("Documental"), cam=est.startsWith("Presentadores"), tut=est.startsWith("Tutorial"), epic=est.startsWith("Tráiler");
+  const voz=cam?"Presentador a cámara":tut?"Voz en off sobre la pantalla":epic?"Texto corto en pantalla + música":"Voz en off";
+  let L=[];
+  L.push("STORYBOARD: "+proy.toUpperCase());
+  L.push("Equipo: "+eq);
+  L.push("Estilo: "+est);
+  L.push("Duración objetivo: 2 a 3 minutos");
+  L.push("");
+  L.push("ESCENA 1. GANCHO (0:00 a 0:10)");
+  L.push("  Se ve: "+(epic?"Toma más impactante del proyecto, con un texto grande":"Toma llamativa del proyecto terminado"));
+  L.push("  Se oye: "+g);
+  L.push("");
+  L.push("ESCENA 2. PRESENTACIÓN (0:10 a 0:30)");
+  L.push("  Se ve: "+(cam?"El equipo a cámara, plano medio":"Título del proyecto en pantalla + tomas del equipo"));
+  L.push("  Se oye ("+voz+"): Somos "+eq+" y creamos "+proy+". "+idea);
+  L.push("");
+  const ps=pasos.length?pasos:["[Paso 1]","[Paso 2]","[Paso 3]"];
+  const per=Math.max(1,Math.floor(60/ps.length));
+  ps.forEach((p,i)=>{
+    const a=30+i*per, b=30+(i+1)*per;
+    L.push("ESCENA "+(3+i)+". PROCESO "+(i+1)+" ("+mmss(a)+" a "+mmss(b)+")");
+    L.push("  Se ve: "+(tut?"Grabación de pantalla de este paso":"B-roll: manos trabajando, bocetos o pantallas de este paso"));
+    L.push("  Se oye ("+voz+"): "+p);
+    L.push("");
+  });
+  let n=3+ps.length;
+  L.push("ESCENA "+n+". RESULTADO (1:30 a 2:15)");
+  L.push("  Se ve: Demostración del proyecto funcionando; zoom a los detalles");
+  L.push("  Se oye ("+voz+"): "+res);
+  L.push("");
+  L.push("ESCENA "+(n+1)+". CIERRE (2:15 a 2:30)");
+  L.push("  Se ve: Imagen final del proyecto y créditos");
+  L.push("  Se oye: "+apr);
+  L.push("  Créditos: "+eq+" | Curso | Música: [nombre y fuente]");
+  L.push("");
+  L.push("LISTA DE TOMAS A GRABAR");
+  L.push("  [ ] Toma del gancho (2 versiones)");
+  L.push("  [ ] "+(cam?"Presentación a cámara":"Tomas cortas de cada integrante"));
+  ps.forEach((p,i)=>L.push("  [ ] Proceso "+(i+1)+": "+p));
+  L.push("  [ ] Demostración del resultado (plano general + primeros planos)");
+  L.push("  [ ] "+(epic?"Textos del tráiler":"Voz en off completa"));
+  document.getElementById("out").value=L.join("\n");
+  document.getElementById("copyMsg").textContent="";
+  sfx.ok(); addXP("guion",20);
+});
+function mmss(s){return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+document.getElementById("copyBtn").addEventListener("click",async()=>{
+  const out=document.getElementById("out"), msg=document.getElementById("copyMsg");
+  let ok=false;
+  try{await navigator.clipboard.writeText(out.value);ok=true}catch(e){}
+  if(!ok){try{out.focus();out.select();ok=document.execCommand("copy")}catch(e){}}
+  if(ok){msg.textContent="Copiado. Péguenlo en un documento del equipo.";sfx.ok()}
+  else{out.focus();out.select();msg.textContent="El texto quedó seleccionado: cópienlo con Ctrl + C.";}
+});
+
+/* ---------- Reto ---------- */
+const QUIZ=[
+  {q:"Su video empieza con 20 segundos de logo y música. ¿Qué cambian?",o:["Lo dejan, así se ve profesional","Empiezan con un gancho en los primeros 10 segundos","Le ponen más efectos al logo"],a:1,e:"El público decide en segundos si sigue mirando. El logo puede ir al final, en los créditos."},
+  {q:"Graban la entrevista con la ventana detrás de la persona. ¿Qué pasa?",o:["La persona queda oscura, a contraluz","Se ve mejor porque hay más luz","No pasa nada"],a:0,e:"La luz debe venir de frente. Giren a la persona para que mire hacia la ventana."},
+  {q:"La música tapa la voz en off. ¿Qué hacen?",o:["Suben la voz al máximo","Quitan la voz y dejan solo música","Bajan la música a un 20 o 30 % cuando hay voz"],a:2,e:"La voz siempre manda. La música acompaña por debajo."},
+  {q:"¿Qué es el B-roll?",o:["Una aplicación para editar","Tomas de apoyo que se ven mientras alguien habla","El segundo video del equipo"],a:1,e:"El B-roll muestra lo que la voz cuenta: manos, detalles, pantallas."},
+  {q:"Quieren que el público vea un detalle pequeño en una captura de pantalla.",o:["Hacen un zoom con fotogramas clave","Le piden al público que se acerque a la pantalla","Lo explican solo con la voz"],a:0,e:"Dos fotogramas clave con diferente escala crean un zoom suave hacia el detalle."},
+  {q:"Encontraron una canción famosa en YouTube que les encanta.",o:["La usan, todo en internet es gratis","La usan si la cortan a 30 segundos","Buscan música libre de derechos y la citan en los créditos"],a:2,e:"La música con derechos puede bloquear o silenciar el video. Usen bibliotecas libres."},
+  {q:"Faltan 15 minutos y el video no está exportado.",o:["Agregan más transiciones","Exportan ya y revisan el archivo","Empiezan otra versión mejor"],a:1,e:"Un video sin exportar no existe. Primero aseguren el MP4; los detalles van después."}
+];
+let qi=0, qok=0, answered=false;
+const quiz=document.getElementById("quiz");
+function renderQ(){
+  if(qi>=QUIZ.length){
+    const nota=(1+4*qok/QUIZ.length).toFixed(1);
+    const msg=nota>=4.6?"Nivel director de cine.":nota>=4?"Muy buen ojo de editor.":nota>=3?"Van bien; repasen los Trucos.":"Repasen Estructura y Trucos antes de editar.";
+    quiz.innerHTML="<div class='result'><div class='grade-l'>Nota del reto</div><div class='grade'>"+nota.replace(".",",")+"</div><p style='font-weight:700;margin:8px 0'>"+qok+" de "+QUIZ.length+" decisiones correctas</p><p>"+msg+"</p><button class='btn' id='again'>Repetir el reto</button></div>";
+    document.getElementById("again").addEventListener("click",()=>{qi=0;qok=0;sfx.tap();renderQ()});
+    addXP("quiz",qok*5); sfx.phase(); return;
+  }
+  answered=false; const Q=QUIZ[qi];
+  quiz.innerHTML="<div class='qprog'><i style='width:"+(qi/QUIZ.length*100)+"%'></i></div><p style='color:var(--muted);margin:0 0 4px;font-weight:700'>Situación "+(qi+1)+" de "+QUIZ.length+"</p><div class='qtext'>"+Q.q+"</div><div class='opts'>"+Q.o.map((o,i)=>"<button class='opt' data-i='"+i+"'>"+o+"</button>").join("")+"</div><div class='fb' id='fb'></div>";
+  quiz.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>{
+    if(answered)return; answered=true;
+    const i=+b.dataset.i, right=i===Q.a;
+    if(right){qok++;sfx.ok()}else sfx.bad();
+    quiz.querySelectorAll(".opt").forEach((x,j)=>{if(j===Q.a)x.classList.add("right");else if(j===i)x.classList.add("wrong");x.disabled=true});
+    document.getElementById("fb").innerHTML="<p style='margin:0 0 10px;font-weight:700;color:"+(right?"var(--ok)":"var(--bad)")+"'>"+(right?"¡Buena decisión!":"Esa no era.")+"</p><p style='margin:0 0 10px'>"+Q.e+"</p><button class='btn solid' id='next'>"+(qi<QUIZ.length-1?"Siguiente situación":"Ver mi nota")+"</button>";
+    document.getElementById("next").addEventListener("click",()=>{qi++;renderQ()});
+    document.getElementById("next").focus();
+  }));
+}
+renderQ();
+
+/* ---------- Checklist ---------- */
+const CHECKS=["Dura entre 1 y 3 minutos.","Los primeros 10 segundos enganchan.","Se entiende qué es el proyecto y qué problema resuelve.","Se ve el proyecto funcionando o terminado.","La voz se escucha clara en todo el video.","La música no tapa la voz y es libre de derechos.","Los textos se leen y no tienen errores de ortografía.","Tiene créditos con los nombres del equipo y la música.","Está exportado en MP4 y lo vimos completo.","El archivo tiene el nombre correcto y fue entregado."];
+const ul=document.getElementById("checks");
+CHECKS.forEach((c,i)=>{const li=document.createElement("li");li.innerHTML="<label><input type='checkbox' data-i='"+i+"'><span>"+c+"</span></label>";ul.appendChild(li)});
+function upd(){
+  const all=ul.querySelectorAll("input"), n=[...all].filter(x=>x.checked).length;
+  document.getElementById("meter").style.width=(n/all.length*100)+"%";
+  document.getElementById("meterTxt").textContent=n+" de "+all.length+" listos"+(n===all.length?". ¡Corte final aprobado!":"");
+  if(n===all.length){sfx.phase();addXP("checks",30)}
+}
+ul.addEventListener("change",e=>{if(e.target.checked)sfx.tap();upd()});
+upd();
+
+/* ---------- Inicio ---------- */
+function fromHash(){const h=(location.hash||"").replace("#","");show(TABS.some(t=>t[0]===h)?h:"mision")}
+window.addEventListener("hashchange",fromHash);
+booting=false;
+fromHash();
+render();
+})();
+</script>
+</body>
+</html>
